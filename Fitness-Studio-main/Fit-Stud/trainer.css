@@ -1,0 +1,63 @@
+/* Add your existing CSS styles here */
+
+/* Style for trainer boxes */
+.trainer-box {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    box-sizing: border-box;
+    position: relative;
+    background-color: #f0f0f0; /* Default background color */
+}
+
+.trainer-thumbnail {
+    text-align: center;
+}
+
+.trainer-photo {
+    max-width: 100px; /* Adjust the max width as needed */
+    display: inline-block;
+}
+
+.hidden-content {
+    display: none;
+}
+
+/* Enlarging effect for clicked trainer box */
+.trainer-box.active {
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+/* Style for trainer media (video) */
+.trainer-media video {
+    width: 100%;
+    max-height: 100%;
+}
+
+/* Style for trainer information */
+.trainer-info {
+    padding-top: 10px;
+    display: none;
+    text-align: center; /* Center-align trainer info */
+}
+
+.trainer-info p {
+    font-size: 16px;
+}
+
+/* Show trainer information and hide thumbnail when the trainer box is active */
+.trainer-box.active .trainer-thumbnail {
+    display: none;
+}
+
+.trainer-box.active .trainer-media {
+    display: block;
+}
+
+.trainer-box.active .trainer-info {
+    display: block;
+}

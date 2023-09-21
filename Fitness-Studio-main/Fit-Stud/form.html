@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="form.css">
+    <title>Appointment Form</title>
+</head>
+<body>
+    <section class="container">
+        <header>Application Form</header>
+        <form action="#" class="form" id="appointmentForm">
+            <div class="input-box">
+                <label>Name</label>
+                <input type="text" placeholder="Enter your name" id="name" name="name" required />
+            </div>
+            <div class="input-box">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="Enter your phone number" id="phoneNumber" name="phoneNumber" required />
+            </div>
+            <div class="input-box">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email" id="email" name="email" required />
+            </div>
+            <div class="input-box">
+                <label>Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label>Select a plan</label>
+                <select id="plan" name="plan" required>
+                    <option value="Classic 1 Month Plan">Classic 1 Month Plan</option>
+                    <option value="Classic 6 Month Plan">Classic 6 Month Plan</option>
+                    <option value="Classic 1 Year Plan">Classic 1 Year Plan</option>
+                    <option value="Premium 1 Month Plan">Premium 1 Month Plan</option>
+                    <option value="Premium 6 Month Plan">Premium 6 Month Plan</option>
+                    <option value="Premium 1 Year Plan">Premium 1 Year Plan</option>
+                </select>
+            </div>
+            <button type="submit" id="submitAppointment">
+                Book a plan
+            </button>
+        </form>
+        <div id="tokenMessage" style="display: none; color: green;">Booked</div>
+    </section>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+    apiKey: "AIzaSyDQbY096F4BXI7em9Q_gPKGhP5TUK44d6Q",
+    authDomain: "fit-stud-e1f50.firebaseapp.com",
+    projectId: "fit-stud-e1f50",
+    storageBucket: "fit-stud-e1f50.appspot.com",
+    messagingSenderId: "937865444451",
+    appId: "1:937865444451:web:766c2dfa7c7adae68c8c56"
+  };
+
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        
+        // Get a Firestore reference
+        const db = getFirestore(app);
+        
+        // Form submission
+        const form = document.getElementById("appointmentForm");
+        const tokenMessage = document.getElementById("tokenMessage");
+        
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+        
+            // Collect user input
+            const name = form.name.value;
+            const phoneNumber = form.phoneNumber.value;
+            const email = form.email.value;
+            const gender = form.gender.value;
+            const plan = form.plan.value;
+        
+            // Create a new document in Firestore
+            try {
+                const docRef = await addDoc(collection(db, "appointments"), {
+                    name: name,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    gender: gender,
+                    plan: plan,
+                });
+                console.log("Document written with ID: ", docRef.id);
+        
+                // Show success message
+                tokenMessage.style.display = "block";
+                form.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+        });
+    </script>
+</body>
+</html>
